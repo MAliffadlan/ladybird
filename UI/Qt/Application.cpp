@@ -446,7 +446,7 @@ void Application::display_download_confirmation_dialog(StringView download_name,
     auto message = MUST(String::formatted("{} saved to: {}", download_name, path));
 
     QMessageBox dialog(active_tab());
-    dialog.setWindowTitle("Ladybird");
+    dialog.setWindowTitle("Mectov Browser");
     dialog.setIcon(QMessageBox::Information);
     dialog.setText(qstring_from_ak_string(message));
     dialog.addButton(QMessageBox::Ok);

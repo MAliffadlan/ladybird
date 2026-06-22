@@ -287,7 +287,7 @@ Settings Settings::create(Badge<Application>)
 
 Settings::Settings(ByteString settings_path)
     : m_settings_path(move(settings_path))
-    , m_new_tab_page_url(URL::about_newtab())
+    , m_new_tab_page_url(URL::create_with_url_or_path("https://searxng.mectov.my.id").value())
     , m_show_menu_bar(DEFAULT_SHOW_MENU_BAR)
     , m_show_bookmarks_bar(DEFAULT_SHOW_BOOKMARKS_BAR)
     , m_default_zoom_level_factor(INITIAL_ZOOM_LEVEL_FACTOR)
@@ -296,6 +296,8 @@ Settings::Settings(ByteString settings_path)
     for (auto const& variable : config_variable_definitions()) {
         m_config_variables[static_cast<size_t>(variable.id)] = variable.default_value;
     }
+
+    m_search_engine = find_search_engine_by_name("SearXNG"_string);
 }
 
 JsonValue Settings::serialize_json() const

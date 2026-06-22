@@ -17,6 +17,7 @@ static auto const& s_builtin_search_engines = *new auto(to_array<SearchEngine>({
     { "Google"_string, "https://www.google.com/search?q=%s"_string },
     { "Kagi"_string, "https://kagi.com/search?q=%s"_string },
     { "Mojeek"_string, "https://www.mojeek.com/search?q=%s"_string },
+    { "SearXNG"_string, "https://searxng.mectov.my.id/search?q=%s"_string },
     { "Startpage"_string, "https://startpage.com/search?q=%s"_string },
     { "Yahoo"_string, "https://search.yahoo.com/search?p=%s"_string },
     { "Yandex"_string, "https://yandex.com/search/?text=%s"_string },

@@ -1,16 +1,16 @@
-# Ladybird
+# Mectov Browser
 
-[Ladybird](https://ladybird.org) is a truly independent web browser, using a novel engine based on web standards.
+**Mectov Browser** is a personal fork of [Ladybird](https://ladybird.org) — a truly independent web browser built from scratch using web standards.
 
 > [!IMPORTANT]
-> Ladybird is in a pre-alpha state, and only suitable for use by developers
+> Mectov Browser is in a pre-alpha state, and only suitable for use by developers
 >
 
 ## Features
 
 We aim to build a complete, usable browser for the modern web.
 
-Ladybird uses a multi-process architecture with a main UI process, several WebContent renderer processes,
+Mectov Browser uses a multi-process architecture with a main UI process, several WebContent renderer processes,
 an ImageDecoder process, and a RequestServer process.
 
 Image decoding and network connections are done out of process to be more robust against malicious content.
@@ -31,9 +31,9 @@ At the moment, many core library support components are inherited from SerenityO
 
 ## How do I build and run this?
 
-See [build instructions](Documentation/BuildInstructionsLadybird.md) for information on how to build Ladybird.
+See [build instructions](Documentation/BuildInstructionsLadybird.md) for information on how to build.
 
-Ladybird runs on Linux, macOS, Windows (with WSL2), and many other \*Nixes.
+Mectov Browser runs on Linux, macOS, Windows (with WSL2), and many other \*Nixes.
 
 ## How do I read the documentation?
 
@@ -41,7 +41,9 @@ Code-related documentation can be found in the [documentation](Documentation/) f
 
 ## Get in touch and participate!
 
-Join [our Discord server](https://discord.gg/nvfjVJ4Svh) to participate in issue and development discussions.
+This is a personal fork for experimentation.
+
+For the original project, join [Ladybird's Discord server](https://discord.gg/nvfjVJ4Svh) to participate in issue and development discussions.
 
 Please read [Getting involved with Ladybird](Documentation/GettingStartedContributing.md) if you're new to Ladybird and want to help.
 
@@ -51,4 +53,4 @@ The project participation guidelines can be found in [`CONTRIBUTING.md`](CONTRIB
 
 ## License
 
-Ladybird is licensed under a 2-clause BSD license.
+Mectov Browser is licensed under a 2-clause BSD license.

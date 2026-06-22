@@ -112,7 +112,7 @@ ErrorOr<int> ladybird_main(Main::Arguments arguments)
             configuration.y = last_position->y();
         }
         auto& window = app->new_window(browser_options.urls, configuration);
-        window.setWindowTitle("Ladybird");
+        window.setWindowTitle("Mectov Browser");
     }
 
     return app->execute();

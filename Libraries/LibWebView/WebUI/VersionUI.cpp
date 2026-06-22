@@ -29,13 +29,17 @@ void VersionUI::load_version_info()
     static auto& command_line = *new String(MUST(String::join(' ', Application::the().command_line_arguments().strings)));
     static auto& executable_path = *new String(MUST(String::from_byte_string(MUST(Core::System::current_executable_path()))));
 
+    auto replace_ladybird = [](String const& str) -> String {
+        return MUST(str.replace("Ladybird"sv, "Mectov"sv, ReplaceMode::FirstOnly));
+    };
+
     JsonObject version_info;
     version_info.set("browserName"_string, browser_name);
     version_info.set("browserVersion"_string, browser_version);
     version_info.set("arch"_string, arch);
     version_info.set("platformName"_string, platform_name);
-    version_info.set("commandLine"_string, command_line);
-    version_info.set("executablePath"_string, executable_path);
+    version_info.set("commandLine"_string, replace_ladybird(command_line));
+    version_info.set("executablePath"_string, replace_ladybird(executable_path));
 
     async_send_message("renderVersionInfo"sv, version_info);
 }
