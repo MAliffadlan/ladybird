@@ -2403,8 +2403,8 @@ void ViewImplementation::handle_web_content_process_crash(LoadErrorPage load_err
         auto escaped_url = escape_html_entities(m_url.serialize());
 
         StringBuilder builder;
-        builder.appendff(ERROR_HTML_HEADER, NO_FALLBACK_FAVICON_LINK, CRASH_ERROR_SVG, "Ladybird flew off-course!"sv);
-        builder.appendff("<p>The web page <a href=\"{}\">{}</a> has crashed.<br><br>You can reload the page to try again.</p>", escaped_url, escaped_url);
+        builder.appendff(ERROR_HTML_HEADER, NO_FALLBACK_FAVICON_LINK, CRASH_ERROR_SVG, "Mectov Browser flew off-course!"sv);
+        builder.appendff("<p>The web page <a href=\"{}\">{}</a> has crashed.<br>Don't worry, I'll try to reload it for you.</p>", escaped_url, escaped_url);
         builder.append(ERROR_HTML_FOOTER);
         load_crash_page_html(builder.string_view(), m_url);
     } else if (should_manage_session_history_in_ui_process()) {

@@ -62,8 +62,8 @@ elseif (CMAKE_SYSTEM_PROCESSOR STREQUAL "riscv64")
     # For the time being use the defaults for the best compatibility with existing hardware and toolchains.
     # FIXME: Remove this branch once -march=native is supported.
 elseif (NOT CMAKE_CROSSCOMPILING)
-    # In all other cases, compile for the native architecture of the host system.
-    add_cxx_compile_options(-march=native)
+    # Override for compatibility: use x86-64 baseline instead of -march=native
+    add_cxx_compile_options(-march=x86-64)
 endif()
 
 add_cxx_compile_options(-Wcast-qual)

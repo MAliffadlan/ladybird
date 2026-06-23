@@ -1316,7 +1316,7 @@ void Application::initialize_actions()
             view->select_all();
     });
 
-    m_open_about_page_action = Action::create("About Ladybird"sv, ActionID::OpenAboutPage, [this]() {
+    m_open_about_page_action = Action::create("About Mectov"sv, ActionID::OpenAboutPage, [this]() {
         open_url_in_new_tab(URL::about_version(), Web::HTML::ActivateTab::Yes);
     });
     m_open_settings_page_action = Action::create("Settings"sv, ActionID::OpenSettingsPage, [this]() {

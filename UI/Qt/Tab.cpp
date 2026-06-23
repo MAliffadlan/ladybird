@@ -25,6 +25,7 @@
 
 #include <QColorDialog>
 #include <QFileDialog>
+#include <QTimer>
 #include <QFont>
 #include <QFontMetrics>
 #include <QHBoxLayout>
@@ -318,6 +319,21 @@ Tab::Tab(BrowserWindow* window, RefPtr<WebView::WebContentClient> parent_client,
 
     view().on_web_content_crashed = [this] {
         set_loading(false);
+        static HashMap<WebContentView*, int> s_tab_crash_count;
+        auto it = s_tab_crash_count.find(&view());
+        int crash_count = 0;
+        if (it != s_tab_crash_count.end()) {
+            crash_count = it->value + 1;
+            s_tab_crash_count.set(&view(), crash_count);
+        } else {
+            crash_count = 1;
+            s_tab_crash_count.set(&view(), 1);
+        }
+        if (crash_count <= 3) {
+            QTimer::singleShot(1500, this, [this]() {
+                view().reload();
+            });
+        }
     };
 
     view().on_url_change = [this](auto const& url) {
