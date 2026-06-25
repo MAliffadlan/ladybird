@@ -15,6 +15,8 @@
 #include <UI/Qt/Settings.h>
 #include <UI/Qt/StringUtils.h>
 #include <UI/Qt/WebContentView.h>
+#include <UI/Qt/BrowserWindow.h>
+#include <UI/Qt/DownloadManagerWidget.h>
 
 #if defined(AK_OS_MACOS)
 #    include <UI/Qt/MacWindow.h>
@@ -445,6 +447,18 @@ void Application::display_download_confirmation_dialog(StringView download_name,
 {
     auto message = MUST(String::formatted("{} saved to: {}", download_name, path));
 
+    // Add to download manager
+    auto* window = const_cast<Application*>(this)->active_window_if_any();
+    if (window && window->m_download_manager) {
+        Ladybird::DownloadEntry entry;
+        entry.filename = qstring_from_ak_string(download_name);
+        entry.path = qstring_from_ak_string(path.string());
+        entry.url = entry.filename;
+        entry.status = "Completed";
+        entry.timestamp = QDateTime::currentDateTime();
+        window->m_download_manager->add_download(entry);
+    }
+
     QMessageBox dialog(active_tab());
     dialog.setWindowTitle("Mectov Browser");
     dialog.setIcon(QMessageBox::Information);
@@ -460,7 +474,19 @@ void Application::display_download_confirmation_dialog(StringView download_name,
 
 void Application::display_error_dialog(StringView error_message) const
 {
-    QMessageBox::warning(active_tab(), "Ladybird", qstring_from_ak_string(error_message));
+    // Show error in download manager too
+    auto* window = const_cast<Application*>(this)->active_window_if_any();
+    if (window && window->m_download_manager) {
+        Ladybird::DownloadEntry entry;
+        entry.filename = "Download failed";
+        entry.path = "";
+        entry.url = qstring_from_ak_string(error_message);
+        entry.status = "Failed";
+        entry.timestamp = QDateTime::currentDateTime();
+        window->m_download_manager->add_download(entry);
+    }
+
+    QMessageBox::warning(active_tab(), "Mectov Browser", qstring_from_ak_string(error_message));
 }
 
 static QClipboard::Mode clipboard_mode(QClipboard const& clipboard, Application::ClipboardType type)

@@ -18,6 +18,7 @@ target_sources(ladybird PRIVATE
     BrowserWindow.cpp
     ChromeStyle.cpp
     DevToolsBanner.cpp
+    DownloadManagerWidget.cpp
     EventLoopImplementationQt.cpp
     EventLoopImplementationQtEventTarget.cpp
     FindInPageWidget.cpp

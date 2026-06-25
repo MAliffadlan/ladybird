@@ -21,6 +21,7 @@
 #include <UI/Qt/ChromeLayout.h>
 #include <UI/Qt/ChromeStyle.h>
 #include <UI/Qt/DevToolsBanner.h>
+#include <UI/Qt/DownloadManagerWidget.h>
 #include <UI/Qt/Icon.h>
 #if defined(AK_OS_MACOS)
 #    include <UI/Qt/MacWindow.h>
@@ -371,6 +372,19 @@ BrowserWindow::BrowserWindow(Vector<URL::URL> const& initial_urls, IsPopupWindow
     m_hamburger_menu->addMenu(m_bookmarks_menu);
     menuBar()->addMenu(m_bookmarks_menu);
 
+    // Help menu (hamburger only)
+    auto* help_menu = m_hamburger_menu->addMenu("&Help");
+
+    auto* show_downloads_action = new QAction("&Downloads", this);
+    connect(show_downloads_action, &QAction::triggered, this, [this]() {
+        if (m_download_manager->isHidden()) {
+            m_download_manager->show();
+        } else {
+            m_download_manager->raise();
+        }
+    });
+    help_menu->addAction(show_downloads_action);
+
     m_history_menu = create_application_menu(*this, application.history_menu());
     m_hamburger_menu->addMenu(m_history_menu);
     menuBar()->addMenu(m_history_menu);
@@ -383,8 +397,6 @@ BrowserWindow::BrowserWindow(Vector<URL::URL> const& initial_urls, IsPopupWindow
     m_hamburger_menu->addMenu(debug_menu);
     menuBar()->addMenu(debug_menu);
 
-    auto* help_menu = m_hamburger_menu->addMenu("&Help");
-    menuBar()->addMenu(help_menu);
 
     help_menu->addAction(create_application_action(*help_menu, application.open_about_page_action(), IncludeActionIcon::No));
 
@@ -476,6 +488,12 @@ BrowserWindow::BrowserWindow(Vector<URL::URL> const& initial_urls, IsPopupWindow
     });
     m_devtools_banner->hide();
     main_layout->addWidget(m_devtools_banner);
+
+    m_download_manager = new DownloadManagerWidget(main_widget);
+    connect(m_download_manager, &DownloadManagerWidget::close_requested, this, [this]() {
+        m_download_manager->hide();
+    });
+    main_layout->addWidget(m_download_manager);
 
     setCentralWidget(main_widget);
     setContextMenuPolicy(Qt::PreventContextMenu);

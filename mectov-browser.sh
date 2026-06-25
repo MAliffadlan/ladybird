@@ -28,18 +28,24 @@ else
     echo "[WARN] Gak detect package manager. Install Qt6 manual ya."
 fi
 
-# Ekstrak browser
-echo "[2/3] Ekstrak Mectov Browser..."
+# Cari binary
+echo "[2/3] Mencari binary..."
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 cd "$SCRIPT_DIR"
 
-if [ ! -f "Ladybird" ]; then
-    echo "[ERROR] File Ladybird gak ditemukan di folder ini."
-    echo "        Pastikan file Ladybird ada di folder yang sama."
+LADYBIRD=""
+if [ -f "Ladybird" ]; then
+    LADYBIRD="./Ladybird"
+elif [ -f "Build/release/bin/Ladybird" ]; then
+    LADYBIRD="./Build/release/bin/Ladybird"
+else
+    echo "[ERROR] Ladybird binary gak ditemukan."
+    echo "        Coba build dulu:"
+    echo "        cd Build/release && cmake ../.. -G Ninja && ninja ladybird"
     exit 1
 fi
 
-chmod +x Ladybird
+chmod +x "$LADYBIRD"
 
 # Jalankan
 echo "[3/3] Menjalankan Mectov Browser..."
@@ -49,4 +55,4 @@ echo "  Mectov Browser jalan! 🚀"
 echo "=========================================="
 echo ""
 
-./Ladybird
+"$LADYBIRD" "$@"

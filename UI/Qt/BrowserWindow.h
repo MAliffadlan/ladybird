@@ -32,6 +32,7 @@ class Tab;
 class WebContentView;
 class BrowserWindow;
 class DevToolsBanner;
+class DownloadManagerWidget;
 
 class ExitFullscreenButton : public QPushButton {
     Q_OBJECT
@@ -159,6 +160,8 @@ private:
     virtual void wheelEvent(QWheelEvent*) override;
     virtual void closeEvent(QCloseEvent*) override;
 
+    friend class Application;
+
     virtual void show_menu_bar_changed() override;
     virtual void show_bookmarks_bar_changed() override;
     virtual void config_variable_changed(WebView::ConfigVariableID) override;
@@ -217,6 +220,7 @@ private:
     TabWidget* m_tabs_container { nullptr };
     Tab* m_current_tab { nullptr };
     DevToolsBanner* m_devtools_banner { nullptr };
+    DownloadManagerWidget* m_download_manager { nullptr };
 
     QMenu* m_hamburger_menu { nullptr };
     QMenu* m_bookmarks_menu { nullptr };
