@@ -385,6 +385,22 @@ BrowserWindow::BrowserWindow(Vector<URL::URL> const& initial_urls, IsPopupWindow
     });
     help_menu->addAction(show_downloads_action);
 
+    // Quick clear history in hamburger menu
+    auto* clear_history_action = new QAction("Clear &History", this);
+    connect(clear_history_action, &QAction::triggered, this, []() {
+        QMessageBox::StandardButton reply = QMessageBox::question(nullptr, "Mectov Browser",
+            "Clear all browsing history?\n\nThis cannot be undone.",
+            QMessageBox::Yes | QMessageBox::No);
+        if (reply == QMessageBox::Yes) {
+            WebView::Application::ClearBrowsingDataOptions opts;
+            opts.delete_history = WebView::Application::ClearBrowsingDataOptions::Delete::Yes;
+            WebView::Application::the().clear_browsing_data(opts);
+        }
+    });
+
+    auto* tools_menu = m_hamburger_menu->addMenu("&Tools");
+    tools_menu->addAction(clear_history_action);
+
     m_history_menu = create_application_menu(*this, application.history_menu());
     m_hamburger_menu->addMenu(m_history_menu);
     menuBar()->addMenu(m_history_menu);
